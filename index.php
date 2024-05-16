@@ -4,10 +4,13 @@
 	require_once 'vendor/autoload.php';
 
 	$heading = 'Home';
+	
 
 	require "views/index.view.php";
 
 
 ?>
+
+
 
 

@@ -3,7 +3,7 @@
 	"description": "classic model in mvc",
 	"autoload": {
 		"psr-4": {
-			"Crolweb\\Mvc\\": "src/"
+			"Crolweb\\Mvc\\": ""
 		}
 	},
 	"authors": [

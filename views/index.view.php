@@ -2,7 +2,6 @@
 <?php require "partials/banner.php";?>
 <?php require_once('controllers/getAllProducts.php')?>
 
-	
 
 	<ul>
 	<?php 
