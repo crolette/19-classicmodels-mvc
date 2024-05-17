@@ -3,7 +3,7 @@
 	"description": "classic model in mvc",
 	"autoload": {
 		"psr-4": {
-			"Crolweb\\Mvc\\": ""
+			"App\\": "src/"
 		}
 	},
 	"authors": [
@@ -13,6 +13,7 @@
 		}
 	],
 	"require": {
-		"ext-pdo": "*"
+		"ext-pdo": "*",
+		"altorouter/altorouter": "^2.0"
 	}
 }

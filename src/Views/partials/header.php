@@ -1,6 +1,6 @@
 <?php 
         $arr_cookie_options = array (
-					'cookie_lifetime' => 60, 
+					'cookie_lifetime' => 3600, 
 					'cookie_path' => '/', 
 					'cookie_domain' => 'localhost', 
 					'cookie_secure' => false,    
@@ -8,7 +8,7 @@
 					'cookie_samesite' => 'Lax' 
 		);
 
-    session_set_cookie_params(60);
+    // session_set_cookie_params(60);
 
     // TODO verify the lifetime of the session
     
@@ -20,7 +20,6 @@
         // print_r($_SESSION['user']);
         $user = $_SESSION['user'];
     } 
-var_dump($user);
 ?>
 
 <!DOCTYPE html>
@@ -28,22 +27,23 @@ var_dump($user);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Classic Models - <?= htmlspecialchars($heading) ?></title>
+    <title>Classic Models?></title>
 </head>
 <body>
 
 <header>
     <nav>
     	<ul>
-        <li><a href="./index.php">Home</a></li>
+        <li><a href="<?= $router->generate('home') ?>">Home</a></li>
         
             
             <?php if ($user === null): ?>
-                <li><a href="./login.php">Login</a></li>
-                <li><a href="./subscription.php">Subscription</a></li>
+                <li><a href="<?= $router->generate('login') ?>">Login</a></li>
+                <!-- <li><a href="/loginpage">Login 2</a></li> -->
+                <li><a href="/subscription">Subscription</a></li>
                 <?php else: ?>
                     <li>Logged in as <?= htmlspecialchars($user['username']) ?></li>
-                    <li><a href="./logout.php">Logout</a></li>
+                    <li><a href="/19-composer-mvc/login/logout.php">Logout</a></li>
             <?php endif; ?>
       </ul>
     </nav>
