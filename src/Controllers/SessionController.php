@@ -1,6 +1,6 @@
 <?php 
 namespace App\Controllers;
-require_once(CONFIG_PATH .'config.php');
+
 class SessionController 
 {
 
@@ -8,7 +8,6 @@ class SessionController
     }
 
     public static function createSession(string $username, int $id) {
-        var_dump($username);
         
         global $arr_cookie_options;
 

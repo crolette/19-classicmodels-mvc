@@ -38,20 +38,20 @@
     <?php 
         if (isset($_SESSION['user'])):
     ?>
-    <form method="post" action="">
-        <label for="comment">Add a comment</label>
-        <input type="text" name="comment" id="comment">
-        <input type="submit" value="Add a new comment">
+    <form method="post" action="" class="row g-2">
+        <label for="comment" class="">Add a comment</label>
+        <input type="text" name="comment" id="comment" class="form-control">
+        <input type="submit" value="Add a new comment" class="btn btn-primary">
     </form>
                 
     <?php endif;?>
     <?php if (isset($_SESSION['errorMessage'])):?>
-    <div class="alert alert-danger">
+    <div class="alert alert-danger mt-2">
         <?php echo htmlspecialchars($_SESSION['errorMessage']);?>
     </div>
     <?php endif;?>
     <?php if (isset($_SESSION['successMessage'])):?>
-    <div class="success alert-success">
+    <div class="alert alert-success mt-2">
         <?php echo htmlspecialchars($_SESSION['successMessage']);?>
     </div>
     <?php endif;?>

@@ -30,7 +30,6 @@ class ProductController
     public function postComment(array $params) {
 
         $postDate = date('Y-m-d H:i:s', time());
-        var_dump($postDate);
 
         if(isset($_POST['comment']) || !empty($_POST['comment'])) {
             $comment = strip_tags($_POST['comment']);

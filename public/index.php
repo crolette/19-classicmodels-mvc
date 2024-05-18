@@ -14,10 +14,9 @@
 	
 	
 	session_start($arr_cookie_options);   
-    $user = null;
+    $userSession = null;
     if(isset($_SESSION['user'])) {
-        $user = $_SESSION['user'];
-        var_dump($user);
+        $userSession = $_SESSION['user'];
     }
 
 	$match = $router->match();

@@ -14,13 +14,14 @@
     	<a class="nav-link" href="<?= $router->generate('home') ?>">Home</a>
         
             
-            <?php if ($user === null): ?>
+            <?php if ($userSession === null): ?>
                 <a class="nav-link" href="<?= $router->generate('login') ?>">Login</a>
                 <!-- <li><a href="/loginpage">Login 2</a></li> -->
                 <a class="nav-link" href="<?= $router->generate('subscription') ?>">Subscription</a>
                 <?php else: ?>
-                    <p class="nav-link">Logged in as <?= htmlspecialchars($user['username']) ?></p>
+                    <p class="nav-link">Logged in as <?= htmlspecialchars($userSession['username']) ?></p>
                     <a class="nav-link" href="<?= $router->generate('logout') ?>">Logout</a>
+                    <a class="nav-link" href="<?= $router->generate('user-profile') ?>">User Profile</a>
             <?php endif; ?>
       </ul>
     </nav>

@@ -67,9 +67,9 @@ class Users
             }
     }
 
-    public function getUser($username) {
+    public function getUserInfos($username) {
 
-        $sql = 'SELECT username FROM users 
+        $sql = 'SELECT username, email, subscription_date FROM users 
                 WHERE username = :username';
 
         try {
@@ -77,13 +77,7 @@ class Users
             $statement->bindParam(':username', $username, PDO::PARAM_STR);
             $statement->execute();
             $user = $statement->fetch(PDO::FETCH_ASSOC);
-            echo 'USER : ';
-            var_dump($user);
-            if(!$user) {
-                return false;
-            } else {
-                return true;
-            }
+            return $user;
 
         } catch (Exception $e) {
                 return ['error' => $e->getMessage()];
@@ -115,9 +109,9 @@ class Users
 
 
 
-    public function postUser(string $password, string $email, string $username) {
-        $sql = 'INSERT INTO users (username, email, password) 
-                VALUES (:username, :email, :pass)';
+    public function postUser(string $password, string $email, string $username, string $subscriptionDate) {
+        $sql = 'INSERT INTO users (username, email, password, subscription_date) 
+                VALUES (:username, :email, :pass, :subscriptionDate)';
 
         try {
                 $this->db->beginTransaction();
@@ -125,6 +119,7 @@ class Users
                 $statement->bindParam(':username', $username, PDO::PARAM_STR);
                 $statement->bindParam(':email', $email, PDO::PARAM_STR);
                 $statement->bindParam(':pass', $password, PDO::PARAM_STR);
+                $statement->bindParam(':subscriptionDate', $subscriptionDate, PDO::PARAM_STR);
                 $statement->execute();
                 $id = $this->db->lastInsertId();
                 echo "ID <br><br>";
@@ -141,6 +136,44 @@ class Users
                     $statement = null;
                 }
 
+    }
+
+    public function getUserPassword(string $password, string $username) {
+
+        $sql = 'SELECT password, password 
+                FROM users 
+                WHERE username = :username';
+
+        try {
+            $statement = $this->db->prepare($sql);
+            $statement->bindParam(':username', $username, PDO::PARAM_STR);
+            $statement->execute();
+            return $password = $statement->fetch(PDO::FETCH_ASSOC);
+
+        } catch (Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+
+    public function updatePassword(string $newPassword) {
+        echo "new password";
+
+        $sql = 'UPDATE users
+                SET password = :newPassword
+                WHERE id= :userId';
+
+        try {
+            $this->db->beginTransaction();
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':newPassword', $newPassword);
+            $stmt->bindParam(':userId', $_SESSION['user']['id']);
+            $stmt->execute();
+            $this->db->commit();
+            return true;
+        } catch (Exception $e) {
+            $this->db->rollBack();
+            return false;
+        }
     }
     
 

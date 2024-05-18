@@ -39,7 +39,7 @@ class Products
         
         $sql = "SELECT * 
                 FROM products
-                LIMIT 10";
+                LIMIT 25";
 
         try {
             $statement = $this->db->prepare($sql);
