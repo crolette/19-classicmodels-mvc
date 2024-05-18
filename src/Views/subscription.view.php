@@ -1,8 +1,3 @@
-<?php $message = '' ;
-
-// require_once('../controllers/postUser.php')
-?>
-
 <h1>Subscription</h1>
 
 <form method="post" action="">
@@ -15,5 +10,10 @@
     <input type="submit" value="Create new account">
 </form>
 
-<span><?= $message ?></span>
+
+<?php if (isset($_SESSION['errorMessage'])):?>
+    <div class="alert alert-danger">
+        <?php echo htmlspecialchars($_SESSION['errorMessage']);?>
+    </div>
+<?php endif;?>
 

@@ -6,13 +6,12 @@ use App\Models\Database;
 class HomeController
 {
     public function __construct() {
-        echo "Hello HomeController";
+        // echo "Hello HomeController";
     }
 
     public function index() {
-
-	$db = new Database();
-	$products = $db->getAllProducts();
+        $db = new Database();
+        $products = $db->getAllProducts();
         require '../src/Views/home.view.php';
     }
 }

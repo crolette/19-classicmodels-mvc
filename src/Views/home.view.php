@@ -1,28 +1,21 @@
 <?php 
-	// require_once '../vendor/autoload.php';
-	// require "partials/header.php"; 
-	// require "partials/banner.php";
-	// require_once('../src/Controllers/getAllProducts.php')
-	
+	$GLOBALS['pageTitle'] = 'Classic Models - Home';
+	$GLOBALS['pageDescription'] = 'Home of Classic Models';
 ?>
 	<h1>Home</h1>
-
-	<ul>
+	<table class="table table-striped table-hover">
 	<?php 
-	// var_dump($_SERVER);
 	
 	foreach ($products as $product):
 	?>
-	<li>
-        <a href="/product-page/<?= $product["productCode"]?>">
-		<?= $product["productName"]?>
-        </a>
-	</li>
+	<tr>
+        <td>
+			<a href="/product-page/<?= $product["productCode"]?>">
+			<?= $product["productName"]?>
+			</a>
+		</td>
+	</tr>
 	<?php 
 	endforeach;?>
-	</ul>
+	</table>
 
-
-<?php 
-// require "partials/footer.php"; 
-?>

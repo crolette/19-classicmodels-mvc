@@ -5,40 +5,43 @@
 	error_reporting(E_ALL);
 	
 	use \AltoRouter as Router;
-use App\Controllers\HomeController;
 
 	$router = new Router();
-		
-
-	// require('../config/routes.php');
-	    $router->map('GET', '/', ['App\Controllers\HomeController', 'index'], 'home');
-	$router->map('GET', '/product-page/[*:productId]', ['App\Controllers\ProductController', 'showProduct']);
-	$router->map('GET', '/subscription', ['App\Controllers\SubscriptionController', 'subscription'], 'subscription');
-	$router->map('GET', '/loginpage',['App\Controllers\LoginController', 'login'] , 'login');
-	// $router->map('GET', '/', 'home', 'home');
-	$match = $router->match();
-	// phpinfo();
-
-	var_dump($match);
 	
+	define('CONFIG_PATH', dirname(__DIR__) . '/src/config/');
+	require_once(CONFIG_PATH .'config.php');
+	require CONFIG_PATH . 'routes.php';
+	
+	
+	session_start($arr_cookie_options);   
+    $user = null;
+    if(isset($_SESSION['user'])) {
+        $user = $_SESSION['user'];
+        var_dump($user);
+    }
+
+	$match = $router->match();
+
 	if(is_array($match)) {
-		require('../src/Views/partials/header.php');
 		$controller = $match['target'][0];
 		$action = $match['target'][1];
-		
 
 		if(class_exists($controller)) {
+
 			$controllerInstance = new $controller;
+
 		} if(method_exists($controllerInstance, $action)) {
-			$params = array_values($match['params']);
-			call_user_func_array([$controllerInstance, $action], $params);
+			
+			ob_start();
+			call_user_func_array([$controllerInstance, $action], [$match['params']]);
+			$pageContent = ob_get_clean();
+			
 		} 
+		require('../src/Views/partials/layout.php');
 	} else {
 		require ('errors/404.php');
 	}
-
-	require('../src/Views/partials/footer.php');
-
+	
 ?>
 
 
