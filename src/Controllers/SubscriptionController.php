@@ -1,8 +1,8 @@
 <?php 
 namespace App\Controllers;
-use App\Models\Database;
 use App\Controllers\SessionController;
 use App\Controllers\Sanitizer as SANITIZE;
+use App\Models\Users;
 
 class SubscriptionController
 {
@@ -23,7 +23,7 @@ class SubscriptionController
                 exit;
             }
             $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-            $db = new Database();
+            $db = new Users();
             if ($db->getUser($username)) {
                 $_SESSION['errorMessage'] = "User already exists";
                 exit;

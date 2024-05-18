@@ -2,7 +2,7 @@
 namespace App\Controllers;
 use App\Controllers\Sanitizer as SANITIZE;
 use App\Controllers\SessionController;
-use App\Models\Database;
+use App\Models\Users;
 
 class LoginController {
 
@@ -18,7 +18,7 @@ class LoginController {
     public function loginUser() {
         if(isset($_POST['username'], $_POST['password'])) {
             $username = SANITIZE::sanitize_username($_POST['username']);
-            $db = new Database();
+            $db = new Users();
             $user = $db->getUserByUsername($username);
             // echo 'USER : ';
             // var_dump($user);

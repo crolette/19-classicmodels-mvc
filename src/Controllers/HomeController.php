@@ -1,7 +1,7 @@
 <?php 
 declare(strict_types=1);
 namespace App\Controllers;
-use App\Models\Database;
+use App\Models\Products;
 
 class HomeController
 {
@@ -10,7 +10,7 @@ class HomeController
     }
 
     public function index() {
-        $db = new Database();
+        $db = new Products();
         $products = $db->getAllProducts();
         require '../src/Views/home.view.php';
     }

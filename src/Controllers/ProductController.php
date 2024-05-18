@@ -3,7 +3,7 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use \time;
-use App\Models\Database;
+use App\Models\Products;
 
 class ProductController
 {
@@ -19,7 +19,7 @@ class ProductController
             echo "url incorrect";
             exit;
         } else {
-            $db = new Database;
+            $db = new Products;
             $comments = $db->getComments($productCode);
             $product = $db->getProductByProductCode($productCode);
             $db->closeDbConnection();
@@ -36,7 +36,7 @@ class ProductController
             $comment = strip_tags($_POST['comment']);
             $comment = htmlspecialchars($comment);
             
-            $db = new Database;
+            $db = new Products;
             $response = $db->postComment($comment, $_SESSION['user']['id'], $params['productId'], $postDate);
             if (isset($response['error'])) {
                 $_SESSION['errorMessage'] = $response['error'];
