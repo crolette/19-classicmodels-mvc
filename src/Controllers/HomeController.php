@@ -15,7 +15,6 @@ class HomeController
         if(isset($_SESSION['user']['id'])) {
             $favorites = $db->getFavoritesProductCodeOfUser(intval($_SESSION['user']['id']));
         }
-        print_r(($favorites));
 
         require '../src/Views/home.view.php';
     }
