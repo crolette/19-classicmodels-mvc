@@ -2,7 +2,6 @@
 declare(strict_types=1);
 namespace App\Controllers;
 
-use \time;
 use App\Models\Products;
 
 class ProductController
@@ -13,17 +12,28 @@ class ProductController
     }
 
     public function showProduct(array $params) {
-        $productCode = $params['productId'];
+        $parameters=explode('&', $params['productId']);
+        $productCode = $parameters[0];
         
-        if(empty($productCode) || !isset($productCode)) {
-            echo "url incorrect";
-            exit;
-        } else {
-            $db = new Products;
-            $comments = $db->getComments($productCode);
-            $product = $db->getProductByProductCode($productCode);
-            $db->closeDbConnection();
-            require '../src/Views/product.view.php';
+            
+            if(empty($productCode) || !isset($productCode)) {
+                $_SESSION['errorMessage'] = "This product does not exist";
+                exit;
+            } else {
+                $db = new Products;
+                if(in_array("add-to-favorite",$parameters)) {
+                    $favoriteUser = $db->addToFavorite($productCode, $_SESSION['user']['id']);
+                }
+                elseif(isset($_SESSION['user']['id'])) {
+                    $favoriteUser = $db->getFavorite($productCode, $_SESSION['user']['id']);
+                }
+                if(in_array("remove-from-favorite",$parameters)) {
+                    $favoriteUser = $db->removeFavorite($productCode, $_SESSION['user']['id']);
+                }
+                $comments = $db->getComments($productCode);
+                $product = $db->getProductByProductCode($productCode);
+                $db->closeDbConnection();
+                require '../src/Views/product.view.php';
         }
     }
 
@@ -42,11 +52,13 @@ class ProductController
             } else {
                 $_SESSION['successMessage'] = $response['success'];
             }
+            // $db->closeDbConnection();
             self::showProduct($params);
         }
-        
-
     }
+
+
+
 }
 
 

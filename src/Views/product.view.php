@@ -4,7 +4,18 @@
 ?>
 
 
-    <h2><?= $product["productName"] ?></h2>
+    <h2><?= $product["productName"] ?> 
+    <?php if(isset($_SESSION['user']['id']) && $favoriteUser) : ?>
+        <a href="/product-page/id=<?= $product["productCode"]?>&remove-from-favorite">
+        <button class="btn btn-secondary" id="favorite" data-favorite="checked" key=<?= $product["productCode"]?>><i class="bi bi-star-fill text-warning"></i></button>
+        </a>
+    <?php elseif(isset($_SESSION['user']['id'])) :?>
+        <a href="/product-page/id=<?= $product["productCode"]?>&add-to-favorite">
+        <button class="btn btn-secondary" id="favorite" data-favorite="checked" key=<?= $product["productCode"]?>><i class="bi bi-star-fill "></i></button>
+        </a>
+    <?php endif;?>
+
+    </h2>
 	
     <div class="card">
     <div class="card-body">
@@ -27,6 +38,9 @@
                 Quantity in stock : <?= $product["quantityInStock"]?>
             </li>
             <li class="list-group-item">
+                Product Code : <?= $product["productCode"]?>
+            </li>
+            <li class="list-group-item">
                 MSRP : <?= $product["MSRP"]?>€
             </li>
             
@@ -38,7 +52,7 @@
     <?php 
         if (isset($_SESSION['user'])):
     ?>
-    <form method="post" action="" class="row g-2">
+    <form method="post" action="/product-page/id=<?= $product["productCode"]?>" class="row g-2">
         <label for="comment" class="">Add a comment</label>
         <input type="text" name="comment" id="comment" class="form-control">
         <input type="submit" value="Add a new comment" class="btn btn-primary">
@@ -61,7 +75,8 @@
         <ul>
             <?php foreach($comments as $comment) :?>
                 <li>
-                    <?= $comment['username'] . " (".$comment['postDate'].")"?> : <?= $comment['comment']?> 
+                    <?= $comment['username'] . " (".$comment['postDate'].")"?> : <?= $comment['comment']?>
+                    
                 </li>
             <?php endforeach;?>
         </ul>
@@ -69,5 +84,14 @@
             <p>No comments for this product</p>
     <?php endif;?>
 
+<script defer>
+    const favoriteBtn = document.querySelector('#favorite');
+
+    favoriteBtn.addEventListener("click", (e) => {
+        console.log(e.target);
+        favoriteBtn.classList.toggle("text-warning");
+        window.location.href = "id=<?= $product["productCode"]?>";
+    })
 
 
+</script>

@@ -1,6 +1,6 @@
 <?php 
-    $GLOBALS['pageTitle'] = 'Classic Models - Login Page' ;
-	$GLOBALS['pageDescription'] = 'Classic Models - Login Page';
+    $GLOBALS['pageTitle'] = 'Classic Models - User profile' ;
+	$GLOBALS['pageDescription'] = 'Classic Models - User profile';
 ?>
 
 <h1>My Profile - <?= $user['username'] ?></h1>
@@ -19,6 +19,23 @@
             <td><?= $user['subscription_date'] ?></td>
         </tr>
     </table>
+    <h2>My favorite cars</h2>
+    <?php if($favoriteCars == null) :?>
+    <p>No favorite car yet</p>
+    <?php else :?>
+    <table class="table">
+        <?php foreach($favoriteCars as $favoriteCar) : ?>
+        <tr>
+            <a href="/product-page/id="<?= $favoriteCar['productCode'] ?>></a>
+            <td><?=$favoriteCar['productName'] ?> (<?=$favoriteCar['productCode'] ?>) </td>
+        </tr>
+        <?php endforeach;?>
+    </table>
+    <?php endif;?>
+    
+
+
+
     <button class="btn btn-secondary" id="change-pass" >Change password</button>
     
      <?php if (isset($_SESSION['errorMessage'])):?>

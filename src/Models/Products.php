@@ -140,6 +140,114 @@ class Products
                 }
     }
 
+    public function addToFavorite(string $productId, int $userId) {
+
+        $sql = 'INSERT INTO favorites (productId, userId)
+                VALUES (:productId, :userId)';
+
+        try {
+            $this->db->beginTransaction();
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':productId', $productId);
+            $stmt->bindParam(':userId', $userId);
+            $stmt->execute();
+            $this->db->commit();
+            return true;
+        } catch(Exception $e) {
+            $this->db->rollBack();
+            return ['error' => $e->getMessage()];
+        } finally {
+            $stmt = null;
+        }
+    }
+
+    public function removeFavorite(string $productId, int $userId) {
+
+        $sql = 'DELETE FROM favorites
+                WHERE userId = :userId
+                AND productId = :productId';
+
+        try {
+            $this->db->beginTransaction();
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':productId', $productId);
+            $stmt->bindParam(':userId', $userId);
+            $stmt->execute();
+            $this->db->commit();
+            return false;
+        } catch(Exception $e) {
+            $this->db->rollBack();
+            return ['error' => $e->getMessage()];
+        } finally {
+            $stmt = null;
+        }
+    }
+
+    public function getFavorite(string $productId, int $userId) {
+
+        $sql = "SELECT * 
+                FROM favorites
+                WHERE productId = :productId 
+                AND userId = :userId";
+
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':userId', $userId, PDO::PARAM_STR);
+            $stmt->bindParam(':productId', $productId, PDO::PARAM_STR);
+            $stmt->execute();
+            $response = $stmt->fetch(PDO::FETCH_ASSOC);
+            return !$response ? false : true;
+           
+            // return ['success' => 'Product added to your favorites.'];
+        } catch(Exception $e) {
+            return ['error' => $e->getMessage()];
+        } finally {
+            $stmt = null;
+        }
+    }
+
+    public function getFavoritesOfUser(int $userId) {
+        $sql = 'SELECT productName, productCode
+                FROM favorites f
+                JOIN products p
+                WHERE f.productId = p.productCode
+                AND f.userId = :userId';
+        
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':userId', $userId);
+            $stmt->execute();
+            $favoriteCars = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $favoriteCars;
+            
+        } catch(Exception $e) {
+            return ['error' => $e->getMessage()];
+        } finally {
+            $stmt = null;
+        }
+    }
+
+       public function getFavoritesProductCodeOfUser(int $userId) {
+        $sql = 'SELECT productCode
+                FROM favorites f
+                JOIN products p
+                WHERE f.productId = p.productCode
+                AND f.userId = :userId';
+        
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':userId', $userId);
+            $stmt->execute();
+            $favoriteCars = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $favoriteCars;
+            
+        } catch(Exception $e) {
+            return ['error' => $e->getMessage()];
+        } finally {
+            $stmt = null;
+        }
+    }
+
 
 
 }
