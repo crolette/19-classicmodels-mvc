@@ -16,7 +16,7 @@
 	// Product
 
 	$router->map('GET', '/product-page/id=[*:productId]', ['App\Controllers\ProductController', 'showProduct']);
-	$router->map('POST', '/product-page/id=[*:productId]&favorite', ['App\Controllers\ProductController', 'postComment']);
-	// $router->map('POST', '/product-page/id=[*:productId]&add-to-favorite', ['App\Controllers\ProductController', 'addToFavorite']);
+	$router->map('POST', '/product-page/id=[*:productId]', ['App\Controllers\ProductController', 'postComment']);
+	$router->map('POST', '/product-page/id=[*:productId]&add-to-favorite', ['App\Controllers\ProductController', 'addToFavorite']);
 
 ?>

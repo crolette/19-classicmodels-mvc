@@ -11,17 +11,17 @@
 <body>
 
 <header class="container">
-    <nav class="nav nav-pills justify-content-center">
+    <nav class="nav nav-pills d-flex flex-row justify-content-center align-items-center">
     	<a class="nav-link" href="<?= $router->generate('home') ?>">Home</a>
         
             
             <?php if ($userSession === null): ?>
-                <a class="nav-link" href="<?= $router->generate('login') ?>">Login</a>
+                <a class="nav-link text-bg-success" href="<?= $router->generate('login') ?>">Login</a>
                 <a class="nav-link" href="<?= $router->generate('subscription') ?>">Subscription</a>
                 <?php else: ?>
-                    <p class="nav-link">Logged in as <?= htmlspecialchars($userSession['username']) ?></p>
-                    <a class="nav-link" href="<?= $router->generate('logout') ?>">Logout</a>
-                    <a class="nav-link" href="<?= $router->generate('user-profile') ?>">User Profile</a>
+                    <p class="nav-link mb-0">Logged in as <?= htmlspecialchars($userSession['username']) ?></p>
+                    <a class="nav-link text-bg-primary" href="<?= $router->generate('user-profile') ?>">User Profile</a>
+                    <a class="nav-link text-bg-warning" href="<?= $router->generate('logout') ?>">Logout</a>
             <?php endif; ?>
       </ul>
     </nav>

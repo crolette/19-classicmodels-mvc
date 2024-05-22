@@ -40,26 +40,25 @@ class ProductController
     public function postComment(array $params) {
 
         $postDate = date('Y-m-d H:i:s', time());
+        
 
         if(isset($_POST['comment']) || !empty($_POST['comment'])) {
             $comment = strip_tags($_POST['comment']);
             $comment = htmlspecialchars($comment);
-            
-            $db = new Products;
-            $response = $db->postComment($comment, $_SESSION['user']['id'], $params['productId'], $postDate);
-            if (isset($response['error'])) {
-                $_SESSION['errorMessage'] = $response['error'];
+            if(strlen($comment) > 255) {
+                $_SESSION['errorMessage'] = "Comment maximum 255 signs.";
             } else {
-                $_SESSION['successMessage'] = $response['success'];
+                $db = new Products;
+                $response = $db->postComment($comment, $_SESSION['user']['id'], $params['productId'], $postDate);
+                if (isset($response['error'])) {
+                    $_SESSION['errorMessage'] = $response['error'];
+                } else {
+                    $_SESSION['successMessage'] = $response['success'];
+                }
+                // $db->closeDbConnection();
             }
-            // $db->closeDbConnection();
             self::showProduct($params);
         }
     }
-
-
-
 }
-
-
 ?>

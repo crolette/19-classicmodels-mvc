@@ -54,7 +54,7 @@
     ?>
     <form method="post" action="/product-page/id=<?= $product["productCode"]?>" class="row g-2">
         <label for="comment" class="">Add a comment</label>
-        <input type="text" name="comment" id="comment" class="form-control">
+        <input type="text" name="comment" id="comment" class="form-control" maxlength="255">
         <input type="submit" value="Add a new comment" class="btn btn-primary">
     </form>
                 
@@ -71,11 +71,17 @@
     <?php endif;?>
     
     <h2>Comments</h2>
+    
     <?php if(count($comments) > 0) :?>
-        <ul>
+        <ul class="list-group">
             <?php foreach($comments as $comment) :?>
-                <li>
-                    <?= $comment['username'] . " (".$comment['postDate'].")"?> : <?= $comment['comment']?>
+                <li class="list-group-item d-flex flex-row justify-content-between">
+                     <p><?= $comment['comment']?></p>
+                     <div class="d-flex-inline flex-column align-items-end justify-content-center">
+
+                         <p class="badge text-bg-light rounded-pill">from : <?= $comment['username']?></p>
+                         <p class="badge text-bg-info rounded-pill"><?=$comment['postDate']?></p>
+                        </div>
                     
                 </li>
             <?php endforeach;?>
@@ -83,6 +89,7 @@
         <?php else: ?>
             <p>No comments for this product</p>
     <?php endif;?>
+    </div>
 
 <script defer>
     const favoriteBtn = document.querySelector('#favorite');
