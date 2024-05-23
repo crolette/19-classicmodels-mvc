@@ -9,31 +9,9 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
-class Users
+class Users extends Database
 {
-    private $db;
-
-    public function __construct() {
-        
-        try {
-            $this->db = new PDO("mysql:host=".HOST.";dbname=".DB.";port=".PORT, LOGIN, PASSWORD);
-            $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (Exception $e) {
-            echo $e->getMessage();
-            throw $e;
-        }
-    }
-
-        public function closeDbConnection() {
-        try {
-            $this->db = null;
-
-        } catch (Exception $e) {
-            echo $e->getMessage();
-            throw $e;
-            exit;
-        }
-    }
+    
 
 
     public function getEmail(string $email) {
@@ -69,7 +47,8 @@ class Users
 
     public function getUserInfos($username) {
 
-        $sql = 'SELECT username, email, subscription_date FROM users 
+        $sql = 'SELECT username, email, subscription_date 
+                FROM users 
                 WHERE username = :username';
 
         try {
@@ -88,6 +67,7 @@ class Users
     }
 
     public function getUserByUsername(string $username) {
+
             $sql = 'SELECT username, id, password 
                     FROM users 
                     WHERE username = :username';

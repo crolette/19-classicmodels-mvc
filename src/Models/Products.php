@@ -9,31 +9,8 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
-class Products
+class Products extends Database
 {
-    private $db;
-
-    public function __construct() {
-        
-        try {
-            $this->db = new PDO("mysql:host=".HOST.";dbname=".DB.";port=".PORT, LOGIN, PASSWORD);
-            $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (Exception $e) {
-            echo $e->getMessage();
-            throw $e;
-        }
-    }
-
-        public function closeDbConnection() {
-        try {
-            $this->db = null;
-
-        } catch (Exception $e) {
-            echo $e->getMessage();
-            throw $e;
-            exit;
-        }
-    }
 
         public function getAllProducts() {
         
@@ -120,7 +97,6 @@ class Products
                 VALUES (:comment, :userId, :productId, :postDate)';
 
             try { 
-               
                 $this->db->beginTransaction();
                 $statement = $this->db->prepare($sql);
                 $statement->bindParam(':comment', $comment, PDO::PARAM_STR);

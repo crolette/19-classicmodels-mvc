@@ -3,7 +3,7 @@
 	ini_set('display_errors', 1);
 	ini_set('display_startup_errors', '1');
 	error_reporting(E_ALL);
-	
+		
 	use \AltoRouter as Router;
 
 	$router = new Router();
@@ -36,7 +36,7 @@
 			$pageContent = ob_get_clean();
 			
 		} 
-		require('../src/Views/partials/layout.php');
+		require('../src/Views/partials/layout.view.php');
 	} else {
 		require ('errors/404.php');
 	}
